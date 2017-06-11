@@ -1,9 +1,10 @@
 """
-Script para pegar P/L, Valor de Mercado, Patrimônio Líquido e Lucro Líquido
-de empresas da B3
+Get Fundamentalist Financial Ratios from Fundamentus website
+B3 - BVM&F Bovespa - Brasil, Bolsa, Balcão
 """
 from bs4 import BeautifulSoup
 import fundamentus
+import csv
 
 def extract_data_from(table, position):
     return table.select('.data .txt')[position].string.strip()
@@ -48,14 +49,27 @@ def get_fundamentalist_data(stocks):
 
     return stocks_info
 
+def get_headers(stocks):
+    return list(stocks_info[0].keys())
+
 def save_data_to_json(data):
     filename = 'fundamentalist_data.json'
     with open(filename, 'w') as f:
         f.write(str(data))
 
+def save_data_to_csv(data):
+    filename = 'fundamentalist_data.csv'
+    with open(filename, 'w') as f:
+        header = get_headers(data)
+        writer = csv.writer(f, delimiter=';')
+        writer.writerow(header)
+
+        for stock in data:
+            writer.writerow(stock.values())
+
 
 if __name__ == "__main__":
     stocks = fundamentus.get_stocks()
-    stocks_info = get_fundamentalist_data(stocks[:])
-    save_data_to_json(stocks_info)
+    stocks_info = get_fundamentalist_data(stocks)
+    save_data_to_csv(stocks_info)
 
