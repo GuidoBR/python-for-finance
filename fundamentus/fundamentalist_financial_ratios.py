@@ -2,48 +2,48 @@
 Script para pegar P/L, Valor de Mercado, Patrimônio Líquido e Lucro Líquido
 de empresas da B3
 """
-import requests
 from bs4 import BeautifulSoup
 import fundamentus
 
-def get_pl(table):
-    return table.select('.w2.data')[0].select('.txt')[0].string
-
-def get_patrimonio_liquido(table):
-    return table.select('.data span.txt')[5].string
-
-def get_lucro_liquido(table):
-    return table.select('.data .txt')[4].string
-
-def get_valor_mercado(table):
-    return table.select('.data .txt')[0].string
-
-def get_stock_page(stock_url):
-    req = requests.get(stock_url)
-    return req.content
+def extract_data_from(table, position):
+    return table.select('.data .txt')[position].string.strip()
 
 def get_fundamentalist_data(stocks):
     stocks_info = []
     for stock in stocks:
         print("Getting data for Stock {}".format(stock))
         stock_url = fundamentus.get_stock_url(stock)
-        page = get_stock_page(stock_url)
+        page = fundamentus.download_stock_html(stock_url)
         html = BeautifulSoup(page, 'html.parser')
 
         # Tabelas
         # 0 - Cotação
-        # 1 - Valor de mercado
-        # 2 - Indicadores fundamentalistas
-        # 3 - Balanço patrimonial
-        # 4 - Demonstrativo de resultados
         tables = html.select("table.w728")
 
         stocks_info.append({
             'codigo': stock,
-            'pl': get_pl(tables[2]),
-            'patrimonio_liquido': get_patrimonio_liquido(tables[3]),
-            'lucro_liquido': get_lucro_liquido(tables[4]),
-            'valor_mercado': get_valor_mercado(tables[1]),
+            # 1 - Valor de mercado
+            'valor_mercado': extract_data_from(tables[1], 0),
+            'valor_firma': extract_data_from(tables[1], 2),
+            'numero_acoes': extract_data_from(tables[1], 3),
+            # 2 - Indicadores fundamentalistas
+            'p/l': extract_data_from(tables[2], 0),
+            'lpa': extract_data_from(tables[2], 1),
+            'p/vp': extract_data_from(tables[2], 2),
+            'vpa': extract_data_from(tables[2], 3),
+            'p/ebit': extract_data_from(tables[2], 4),
+            'p/ativos': extract_data_from(tables[2], 5),
+            'p/cap.giro': extract_data_from(tables[2], 6),
+            'p/ativ.circ.liq': extract_data_from(tables[2], 7),
+            # 3 - Balanço patrimonial
+            'ativo': extract_data_from(tables[3], 0),
+            'disponibilidades': extract_data_from(tables[3], 1),
+            'ativo_circulante': extract_data_from(tables[3], 2),
+            'div_bruta': extract_data_from(tables[3], 3),
+            'div_liquida': extract_data_from(tables[3], 4),
+            'patrimonio_liquido': extract_data_from(tables[3], 5),
+            # 4 - Demonstrativo de resultados
+            'lucro_liquido': extract_data_from(tables[4], 4),
         })
 
     return stocks_info
