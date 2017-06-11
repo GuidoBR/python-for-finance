@@ -4,21 +4,7 @@ de empresas da B3
 """
 import requests
 from bs4 import BeautifulSoup
-
-BASE_URL = "http://fundamentus.com.br/"
-
-"""
->>> get_stock_url('ITSA3')
-'http://fundamentus.com.br/detalhes.php?papel=ITSA3'
-"""
-def get_stock_url(stock):
-    return "{}detalhes.php?papel={}".format(BASE_URL, stock)
-
-
-def get_stocks():
-    with open("fundamentus.txt", "r") as fundamentus_file:
-        stocks = fundamentus_file.read().split()
-    return stocks
+import fundamentus
 
 def get_pl(table):
     return table.select('.w2.data')[0].select('.txt')[0].string
@@ -40,7 +26,7 @@ def get_fundamentalist_data(stocks):
     stocks_info = []
     for stock in stocks:
         print("Getting data for Stock {}".format(stock))
-        stock_url = get_stock_url(stock)
+        stock_url = fundamentus.get_stock_url(stock)
         page = get_stock_page(stock_url)
         html = BeautifulSoup(page, 'html.parser')
 
@@ -69,7 +55,7 @@ def save_data_to_json(data):
 
 
 if __name__ == "__main__":
-    stocks = get_stocks()
+    stocks = fundamentus.get_stocks()
     stocks_info = get_fundamentalist_data(stocks[:])
     save_data_to_json(stocks_info)
 
