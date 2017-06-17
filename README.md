@@ -16,7 +16,7 @@ Notebooks I'm writing following the course [Python for Finance Investment fundam
 
 ## References
 
-- [Python for Finance Investment fundamentals and data analysis](https://www.udemy.com/python-for-finance-investment-fundamentals-data-analytics/)
+- [Udemy - Python for Finance Investment fundamentals and data analysis](https://www.udemy.com/python-for-finance-investment-fundamentals-data-analytics/)
 - [Python for Finance](http://www.guidopercu.com.br/blog/python-for-finance/)
 
 ## Contact
