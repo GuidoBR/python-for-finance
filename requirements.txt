@@ -24,7 +24,7 @@ mistune==0.8.1
 nbconvert==5.1.1
 nbformat==4.3.0
 notebook==6.4.1
-numpy==1.21.0
+numpy==1.22.0
 packaging==16.8
 pandas==0.22.0
 pandas-datareader==0.5.0+33.g1845927
