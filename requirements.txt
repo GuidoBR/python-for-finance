@@ -1,5 +1,5 @@
 appdirs==1.4.3
-bleach==3.1.4
+bleach==3.3.0
 certifi==2017.11.5
 chardet==3.0.4
 cycler==0.10.0
@@ -12,7 +12,7 @@ ipython==6.0.0
 ipython-genutils==0.2.0
 ipywidgets==6.0.0
 jedi==0.10.2
-Jinja2==2.9.6
+Jinja2==2.11.3
 jsonschema==2.6.0
 jupyter==1.0.0
 jupyter-client==5.0.1
@@ -23,8 +23,8 @@ matplotlib==2.0.2
 mistune==0.8.1
 nbconvert==5.1.1
 nbformat==4.3.0
-notebook==5.7.8
-numpy==1.14.0
+notebook==6.4.1
+numpy==1.21.0
 packaging==16.8
 pandas==0.22.0
 pandas-datareader==0.5.0+33.g1845927
@@ -33,7 +33,7 @@ pexpect==4.2.1
 pickleshare==0.7.4
 prompt-toolkit==1.0.14
 ptyprocess==0.5.1
-Pygments==2.2.0
+Pygments==2.7.4
 pyparsing==2.2.0
 python-dateutil==2.6.1
 pytz==2017.3
@@ -48,7 +48,7 @@ terminado==0.6
 testpath==0.3
 tornado==4.5.1
 traitlets==4.3.2
-urllib3==1.24.2
+urllib3==1.26.5
 wcwidth==0.1.7
 webencodings==0.5.1
 widgetsnbextension==2.0.0
